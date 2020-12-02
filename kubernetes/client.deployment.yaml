@@ -1,0 +1,38 @@
+# Source: htcondor/templates/htc-master-pod.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-pod
+  labels:
+    app.kubernetes.io/name: client
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: client
+    spec:
+      priorityClassName: system-node-critical
+      #hostNetwork: true
+      containers:
+      - name: client
+        imagePullPolicy: IfNotPresent
+        image: {{ .Values.wn.image }}
+        command:
+          - sleep
+          - infinity
+        volumeMounts:
+          - name: clustersecret
+            mountPath: /etc/pwd
+      volumes:
+      - name: clustersecret
+        secret:
+          secretName: clustersecret
+          defaultMode: 256
+      - name: mapfile
+        configMap:
+          name: mapfile
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: client
+
+  replicas: 1

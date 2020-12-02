@@ -1,0 +1,14 @@
+cluster_secret: my-test-secret
+
+collector:
+  image: dummy-image
+  host: dummy-endpoint
+  
+schedd:
+  image: dummy-image
+  host: dummy-endpoint
+
+wn:
+  image: dummy-image
+  replicas: 1
+

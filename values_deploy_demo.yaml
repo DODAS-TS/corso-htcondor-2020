@@ -1,0 +1,14 @@
+cluster_secret: fPn802xaBiTxdd6+EwLgztZb6BTdUUtUYBv692KwuzA= 
+
+collector:
+  image: htcondor/cm:8.9.9-el7
+  host: master.condor.svc.cluster.local
+  
+schedd:
+  image: htcondor/submit:8.9.9-el7
+  host: schedd.condor.svc.cluster.local
+
+wn:
+  image: htcondor/execute:8.9.9-el7 
+  replicas: 0
+

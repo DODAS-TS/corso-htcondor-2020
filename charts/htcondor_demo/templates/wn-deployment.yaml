@@ -48,4 +48,4 @@ spec:
     matchLabels:
       app.kubernetes.io/name: wn
 
-  replicas: 1
+  replicas: {{ .Values.wn.replicas }}

@@ -1,0 +1,27 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: schedd
+spec:
+ selector:
+    app.kubernetes.io/name: schedd
+ clusterIP: None
+ ports:
+  - protocol: TCP
+    name: schedd
+    targetPort: 9618
+    port: 9618
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: master
+spec:
+  selector:
+    app.kubernetes.io/name: master
+  clusterIP: None
+  ports:
+  - protocol: TCP
+    name: collector
+    port: 9618
+    targetPort: 9618
