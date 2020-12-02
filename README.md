@@ -95,8 +95,30 @@ helm rollback htcondor 1
 ### Requirements
 - Flux-CD CLI
 curl -s https://toolkit.fluxcd.io/install.sh | sudo bash
+flux check --pre
+
 ### Managing HTCondor cluster with FluxCD
 
+Generate github token
+export GITHUB_TOKEN=9ca03d9974b4812798a03ff85afb89061d150cfd
+https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token
+https://docs.github.com/en/free-pro-team@latest/github/using-git/changing-a-remotes-url#switching-remote-urls-from-ssh-to-https
+
+create repo https://github.com/dciangot/corso-htcondor-flux-2020
+
+define a chart source
+
+define a deployment
+
+flux bootstrap github \
+  --owner=dciangot \
+  --repository=corso-htcondor-flux-2020 \
+  --branch=main \
+  --path=charts/htcondor_demo \
+  --personal \
+  --token-auth
+
+update deployment
 ## A cluster on private cloud in less than 5min
 
 The template for a public cloud:
