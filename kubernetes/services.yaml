@@ -5,14 +5,12 @@ metadata:
 spec:
  selector:
     app.kubernetes.io/name: schedd
- #clusterIP: None
- type: NodePort
+ clusterIP: None
  ports:
   - protocol: TCP
     name: schedd
-    targetPort: 31618
-    port: 31618
-    nodePort: 31618
+    targetPort: 9618
+    port: 9618
 ---
 kind: Service
 apiVersion: v1
@@ -21,11 +19,9 @@ metadata:
 spec:
   selector:
     app.kubernetes.io/name: master
-  #clusterIP: None
-  type: NodePort
+  clusterIP: None
   ports:
   - protocol: TCP
     name: collector
-    port: 30618
-    targetPort: 30618
-    nodePort: 30618
+    port: 9618
+    targetPort: 9618

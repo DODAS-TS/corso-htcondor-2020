@@ -54,4 +54,4 @@ spec:
     matchLabels:
       app.kubernetes.io/name: master
 
-  replicas: 0
+  replicas: 1

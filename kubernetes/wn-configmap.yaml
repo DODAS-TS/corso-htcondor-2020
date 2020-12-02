@@ -4,10 +4,10 @@ metadata:
   name: wnconfigd
 data:
   01_DODAS_Custom: |
-    CONDOR_HOST = master.condor.svc.cluster.local
+    CONDOR_HOST = master.condor.svc.cluster.local 
     DAEMON_LIST = MASTER, STARTD
     COLLECTOR_NAME = DODAS-POOL
-    COLLECTOR_HOST = $(CONDOR_HOST):30618
+    COLLECTOR_HOST = $(CONDOR_HOST)
     DISCARD_SESSION_KEYRING_ON_STARTUP = False
 
     ALLOW_WRITE = *

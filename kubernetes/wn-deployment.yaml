@@ -17,10 +17,8 @@ spec:
           - labelSelector:
               matchExpressions:
               - key: app.kubernetes.io/name
-                operator: NotIn
+                operator: In
                 values:
-                - master
-                - schedd
                 - wn
             topologyKey: kubernetes.io/hostname
       #hostNetwork: true
@@ -50,7 +48,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: wn
 
-  replicas: 0
+  replicas: 1
 ---
 # Source: htcondor/templates/htc-master-pod.yaml
 apiVersion: apps/v1
@@ -66,17 +64,6 @@ spec:
         app.kubernetes.io/name: client
     spec:
       priorityClassName: system-node-critical
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app.kubernetes.io/name
-                operator: NotIn
-                values:
-                - master
-                - schedd
-            topologyKey: kubernetes.io/hostname
       #hostNetwork: true
       containers:
       - name: client

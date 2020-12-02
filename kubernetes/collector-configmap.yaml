@@ -4,12 +4,12 @@ metadata:
   name: ccbconfigd
 data:
   01_DODAS_Custom: |
-    CONDOR_HOST = host.k3d.internal
-    #NETWORK_HOST = master.condor.svc.cluster.local
+    CONDOR_HOST = master.condor.svc.cluster.local 
+    TCP_FORWARDING_HOST = master.condor.svc.cluster.local
     #PRIVATE_NETWORK_NAME = master.condor.svc.cluster.local
     DAEMON_LIST = COLLECTOR, MASTER, NEGOTIATOR
     COLLECTOR_NAME = DODAS-POOL
-    COLLECTOR_HOST = $(CONDOR_HOST):30618
+    COLLECTOR_HOST = $(CONDOR_HOST)
     DISCARD_SESSION_KEYRING_ON_STARTUP = False
 
     HIGHPORT = 31048
