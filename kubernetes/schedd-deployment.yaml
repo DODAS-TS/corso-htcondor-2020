@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: schedd-pod
+  labels:
+    app.kubernetes.io/name: schedd
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: schedd
+    spec:
+      priorityClassName: system-node-critical
+      #hostNetwork: true
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                - schedd
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - name: schedd
+        resources:
+          requests:
+            memory: "500M"
+            cpu: "100m"
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          capabilities:
+            add:
+            - CAP_SYS_ADMIN
+          privileged: true
+        image: "htcondor/submit:8.9.9-el7"
+        volumeMounts:
+          - mountPath: "/etc/condor/config.d"
+            name: configd
+          - name: clustersecret
+            mountPath: /etc/pwd
+          - name: mapfile
+            mountPath: /home/uwdir/
+          #- name: hostcerts
+          #  mountPath: /etc/certs
+      volumes:
+      - name: configd
+        configMap:
+          name: scheddconfigd
+      - name: clustersecret
+        secret:
+          secretName: clustersecret
+          defaultMode: 256
+      #- name: hostcerts
+      #  secret:
+      #    secretName: example-com-tls
+      #    defaultMode: 256
+      - name: mapfile
+        configMap:
+          name: mapfile
+      - name: spool
+        hostPath:
+          path: /tmp/spool
+          type: Directory
+      #- name: spool
+      #  persistentVolumeClaim:
+      #    claimName: spool
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: schedd
+
+  replicas: 0
