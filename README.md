@@ -158,17 +158,42 @@ define a deployment
 To update deployment --> commit a change
 ## A cluster with IAM token authN on private cloud in less than 5min
 
+- Download the kubeconfig of the cluster
+
+- Create a namespace to isolate the deployement from others
+
+```bash
+kubectl create namespace condor
+```
+
+- Make this namespace the default
+
+```bash
+kubectl config set-context --current --namespace=condor
+```
+
+- Open the schedd and collector ports
+
+### Deploy with helm
+
 The Helm chart for a base installation onr a public cloud is in ./charts/htcondor/ 
 
 And once filled the values with cluster secrets and the cluster public IP and host you can go with
 
 ```bash
-helm install  htcondor ./charts/htcondor/ --values values_deploy_public.yaml --cleanup-on-fail
+helm install  htcondor ./charts/htcondor/ --values values_deploy_public.yaml --wait
+```
+
+Save the ca.crt somewhere:
+
+```bash
+kubectl exec schedd-pod-<pod name here> cat /etc/certs/ca.crt
 ```
 
 No you can try a remote submission with IAM token for example just remember to source:
 
 ```bash
+echo "YOUR CA CERT" > /ca.crt
 export _condor_AUTH_SSL_CLIENT_CAFILE=/ca.crt
 export _condor_SEC_DEFAULT_AUTHENTICATION_METHODS=SCITOKENS
 export _condor_SCITOKENS_FILE=/tmp/token
@@ -177,4 +202,5 @@ export _condor_SCHEDD_HOST=schedd.condor.svc.cluster.local
 export _condot_TOOL_DEBUG=D_FULLDEBUG,D_SECURITY
 ```
 
-Also you need to copy the self signed CA from the cluster (that was automaticcaly generated) in `_condor_AUTH_SSL_CLIENT_CAFILE` and put your access token in _condor_SCITOKENS_FILE
+*N.B.* Also you need to copy the self signed CA from the cluster (that was automaticcaly generated) in `_condor_AUTH_SSL_CLIENT_CAFILE` and put your access token in _condor_SCITOKENS_FILE
+
