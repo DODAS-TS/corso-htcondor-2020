@@ -105,13 +105,13 @@ openssl rand -base64 32
 Then, let's install our release:
 
 ```bash
-helm install  htcondor ./charts/htcondor_demo/ --values values_deploy_demo.yaml --cleanup-on-fail
+helm install  htcondor ./charts/htcondor_demo/ --values values_deploy_demo.yaml
 ```
 
 Now try to change values of the wn replicas and upgrade the installation:
 
 ```bash
-helm upgrade htcondor ./charts/htcondor_demo/ --values values_deploy_demo.yaml --cleanup-on-fail
+helm upgrade htcondor ./charts/htcondor_demo/ --values values_deploy_demo.yaml
 ```
 
 You are also able to rollback to revision 1:
@@ -147,15 +147,12 @@ flux bootstrap github \
   --owner=dciangot \
   --repository=corso-htcondor-flux-2020 \
   --branch=main \
-  --path=charts/htcondor_demo \
   --personal
 ```
 
-define a chart source
-
-define a deployment
 
 To update deployment --> commit a change
+
 ## A cluster with IAM token authN on private cloud in less than 5min
 
 - Download the kubeconfig of the cluster
