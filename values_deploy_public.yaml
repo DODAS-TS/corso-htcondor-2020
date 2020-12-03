@@ -1,0 +1,8 @@
+cluster_secret: my-test-secret
+
+public_host:
+public_ip:
+
+wn:
+  replicas: 1
+
