@@ -1,7 +1,7 @@
 cluster_secret: my-test-secret
 
-public_host:
-public_ip:
+public_host: d4e6b5aa-1700-4565-af35-811105c68afa.k8s.civo.com 
+public_ip: 185.136.232.136 
 
 wn:
   replicas: 1

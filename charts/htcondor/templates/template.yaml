@@ -325,7 +325,7 @@ spec:
       - name: hostcerts
         secret:
           secretName: example-com-tls
-          defaultMode: 256
+          #defaultMode: 256
       - name: configd
         configMap:
           name: ccbconfigd
@@ -383,8 +383,6 @@ spec:
         volumeMounts:
           - mountPath: "/etc/condor/config.d"
             name: configd
-          - mountPath: "/etc/ca"
-            name: cafile
           - name: clustersecret
             mountPath: /etc/pwd
           - name: mapfile
@@ -395,9 +393,6 @@ spec:
       - name: configd
         configMap:
           name: scheddconfigd
-      - name: cafile
-        configMap:
-          name: cafile
       - name: clustersecret
         secret:
           secretName: clustersecret
@@ -405,7 +400,7 @@ spec:
       - name: hostcerts
         secret:
           secretName: example-com-tls
-          defaultMode: 256
+          #defaultMode: 256
       - name: mapfile
         configMap:
           name: mapfile
